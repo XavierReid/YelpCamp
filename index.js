@@ -1,6 +1,5 @@
 var express = require("express"),
     bodyParser = require("body-parser"),
-    comments = require("./models/comment"),
     seedDB = require("./seeds"),
     passport = require("passport"),
     localStrategy = require("passport-local"),

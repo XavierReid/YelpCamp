@@ -1,5 +1,7 @@
 var mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost:27017/yelp_camp", { useNewUrlParser: true });
+// mongoose.connect("mongodb://localhost:27017/yelp_camp", { useNewUrlParser: true });
+mongoose.connect("mongodb://xavierreid:le0isthebest@ds020208.mlab.com:20208/yelpcamp",
+    { useNewUrlParser: true });
 
 //SCHEMA SETUP
 var campgroundSchema = new mongoose.Schema({
@@ -14,7 +16,7 @@ var campgroundSchema = new mongoose.Schema({
         }
     ],
     creator: {
-        id:{
+        id: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User"
         },
@@ -57,12 +59,12 @@ function findAllCampgrounds(callback) {
 //     });
 // }
 
-function findCampgroundWithComments(id, callback){
-    Campground.findById(id).populate("comments").exec(function(err, campground){
-        if(err){
+function findCampgroundWithComments(id, callback) {
+    Campground.findById(id).populate("comments").exec(function (err, campground) {
+        if (err) {
             return console.error(err);
         }
-        if(callback){
+        if (callback) {
             callback(campground);
         }
     });
@@ -82,23 +84,23 @@ function removeAll(callback) {
     });
 }
 
-function remove(id, callback){
-    Campground.findByIdAndRemove(id, function(err, res){
-        if(err){
+function remove(id, callback) {
+    Campground.findByIdAndRemove(id, function (err, res) {
+        if (err) {
             return console.error(err);
-        }console.log(res);
-        if(callback){
+        } console.log(res);
+        if (callback) {
             callback(res);
         }
     });
 }
 
-function findAndUpdate(id, updateObj, callback){
-    Campground.findByIdAndUpdate(id, updateObj, function(err, updatedCampground){
-        if(err){
+function findAndUpdate(id, updateObj, callback) {
+    Campground.findByIdAndUpdate(id, updateObj, function (err, updatedCampground) {
+        if (err) {
             return console.error(err);
         }
-        if(callback){
+        if (callback) {
             callback(updatedCampground);
         }
     });

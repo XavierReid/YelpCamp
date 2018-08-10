@@ -1,5 +1,7 @@
 var mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost:27017/yelp_camp", { useNewUrlParser: true });
+// mongoose.connect("mongodb://localhost:27017/yelp_camp", { useNewUrlParser: true });
+mongoose.connect("mongodb://xavierreid:le0isthebest@ds020208.mlab.com:20208/yelpcamp",
+    { useNewUrlParser: true });
 
 //SCHEMA SETUP
 var commentSchema = new mongoose.Schema({
@@ -50,12 +52,12 @@ function findComment(id, callback) {
     });
 }
 
-function findAndUpdate(id, updateObj, callback){
-    Comment.findByIdAndUpdate(id, updateObj, function(err, comment){
-        if(err){
+function findAndUpdate(id, updateObj, callback) {
+    Comment.findByIdAndUpdate(id, updateObj, function (err, comment) {
+        if (err) {
             return console.error(err);
         }
-        if(callback){
+        if (callback) {
             callback(comment);
         }
     });
@@ -75,12 +77,12 @@ function removeAll(callback) {
     });
 }
 
-function remove(id, callback){
-    Comment.findByIdAndRemove(id, function(err, res){
-        if(err){
+function remove(id, callback) {
+    Comment.findByIdAndRemove(id, function (err, res) {
+        if (err) {
             return console.error(err);
         }
-        if(callback){
+        if (callback) {
             callback(res);
         }
     });
