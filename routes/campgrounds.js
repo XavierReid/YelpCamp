@@ -22,7 +22,7 @@ router.post("/", middleware.isLoggedIn, function (req, res) {
         var campgroundObj = req.body.campground;
         campgroundObj.creator = creator;
     campgrounds.create(campgroundObj, function (campground) {
-        res.redirect("/campgrounds");
+        res.redirect("/campgrounds", {page: 'campgrounds'});
     });
 });
 
