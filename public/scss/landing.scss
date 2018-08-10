@@ -1,0 +1,82 @@
+$bg-images: ("http://i.imgur.com/K3mPv14.jpg", 
+"http://i.imgur.com/SBEmFpv.jpg", "http://i.imgur.com/emvhOnb.jpg",
+"http://i.imgur.com/2LSMCmJ.jpg", "http://i.imgur.com/TVGe0Ef.jpg");
+
+@mixin slide-transition($image, $delay) {
+    background-image: url($image);
+    animation-delay: $delay + s; 
+}
+
+@mixin width-height() {
+    height: 100%;
+    width: 100%;
+}
+
+body{
+    background-color: #000;
+}
+
+#landing-header{
+    z-index: 1;
+    position: relative;
+    text-align: center;
+    padding-top: 40vh;
+}
+
+#landing-header{
+    h1{
+        color: #fff;
+    }
+}
+
+.slideshow { 
+    position: fixed;
+    @include width-height();
+    top: 0;
+    left: 0;
+    z-index: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    li{
+        @include width-height();
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-size: cover;
+        background-position: 50% 50%;
+        background-repeat: no-repeat;
+        opacity: 0;
+        z-index: 0;
+        animation: imageAnimation 50s linear infinite;
+    }
+    $count: 0;
+    @each $image in $bg-images {
+        &:nth-of-type(#{$count+1}){
+            @include slide-transition($image, $count*10);
+            $count: $count + 1;
+        }
+    }
+}
+
+@keyframes imageAnimation { 
+    0% { 
+        opacity: 0; 
+        animation-timing-function: ease-in;
+    }
+    10% {
+        opacity: 1;
+        animation-timing-function: ease-out;
+    }
+    20% {
+        opacity: 1
+    }
+    30% {
+        opacity: 0
+    }
+}
+
+.no-cssanimations .slideshow li {
+	opacity: 1;
+}
+

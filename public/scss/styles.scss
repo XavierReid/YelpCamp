@@ -1,0 +1,15 @@
+$width: 100%;
+
+.thumbnail{
+    img{
+        width: $width;
+    }
+    padding: 0;
+    .caption-full{
+        padding: 9px;
+    }
+}
+
+.deleteButton{
+    display: inline;
+}
