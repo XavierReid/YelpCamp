@@ -3,16 +3,16 @@ var express = require("express"),
     comments = require("../models/comment"),
     router = express.Router(),
     middleware = require("../middleware");
-var NodeGeocoder = require('node-geocoder');
+// var NodeGeocoder = require('node-geocoder');
 
-var options = {
-    provider: 'google',
-    httpAdapter: 'https',
-    apiKey: process.env.GEOCODER_API_KEY,
-    formatter: null
-};
+// var options = {
+//     provider: 'google',
+//     httpAdapter: 'https',
+//     apiKey: process.env.GEOCODER_API_KEY,
+//     formatter: null
+// };
 
-var geocoder = NodeGeocoder(options);
+// var geocoder = NodeGeocoder(options);
 
 router.get("/", function (req, res) {
     campgrounds.findAll(function (campgrounds) {
@@ -29,24 +29,24 @@ router.post("/", middleware.isLoggedIn, function (req, res) {
         id: req.user._id,
         username: req.user.username
     };
-    geocoder.geocode(req.body.campground.location, function (err, data) {
-        if (err || !data.length) {
-            console.log(err);
-            req.flash('error', err.message);
-            return res.redirect('back');
-        }
-        var lat = data[0].latitude;
-        var lng = data[0].longitude;
-        var location = data[0].formattedAddress;
-        var campgroundObj = req.body.campground;
-        campgroundObj.creator = creator;
-        campgroundObj.location = location;
-        campgroundObj.lat = lat;
-        campgroundObj.long = lng;
-        campgrounds.create(campgroundObj, function (campground) {
-            res.redirect("/campgrounds", { page: 'campgrounds' });
-        });
+    // geocoder.geocode(req.body.campground.location, function (err, data) {
+    //     if (err || !data.length) {
+    //         console.log(err);
+    //         req.flash('error', err.message);
+    //         return res.redirect('back');
+    //     }
+    //     var lat = data[0].latitude;
+    //     var lng = data[0].longitude;
+    //     var location = data[0].formattedAddress;
+    var campgroundObj = req.body.campground;
+    campgroundObj.creator = creator;
+    // campgroundObj.location = location;
+    // campgroundObj.lat = lat;
+    // campgroundObj.long = lng;
+    campgrounds.create(campgroundObj, function (campground) {
+        res.redirect("/campgrounds", { page: 'campgrounds' });
     });
+    // });
 });
 
 router.get("/:id", function (req, res) {
@@ -64,15 +64,15 @@ router.get("/:id/edit", middleware.checkCampgroundOwnership, function (req, res)
 });
 
 router.put("/:id", middleware.checkCampgroundOwnership, function (req, res) {
-    geocoder.geocode(req.body.location, function (err, data) {
-        if (err || !data.length) {
-            req.flash('error', err.message);
-            return res.redirect('back');
-        }
-        req.body.campground.lat = data[0].latitude;
-        req.body.campground.lng = data[0].longitude;
-        req.body.campground.location = data[0].formattedAddress;
-    });
+    // geocoder.geocode(req.body.location, function (err, data) {
+    //     if (err || !data.length) {
+    //         req.flash('error', err.message);
+    //         return res.redirect('back');
+    //     }
+    //     req.body.campground.lat = data[0].latitude;
+    //     req.body.campground.lng = data[0].longitude;
+    //     req.body.campground.location = data[0].formattedAddress;
+    // });
     campgrounds.findAndUpdate(req.params.id, { $set: req.body.campground }, function (updateCampground) {
         res.redirect(`/campgrounds/${req.params.id}`);
     });
