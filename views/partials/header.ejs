@@ -44,6 +44,7 @@
                             <li>
                                 <a href="#">Signed In As
                                     <%= currentUser.username %>
+                                    <%=currentUser && currentUser.isAdmin ? '(Admin)' : ''%>
                                 </a>
                             </li>
                             <li>
