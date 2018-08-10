@@ -1,7 +1,8 @@
 var mongoose = require("mongoose");
 // mongoose.connect("mongodb://localhost:27017/yelp_camp", { useNewUrlParser: true });
-mongoose.connect("mongodb://xavierreid:le0isthebest@ds020208.mlab.com:20208/yelpcamp",
-    { useNewUrlParser: true });
+mongoose.connect(process.env.DATABASEURL, { useNewUrlParser: true });
+// mongoose.connect("mongodb://xavierreid:le0isthebest@ds020208.mlab.com:20208/yelpcamp",
+//     { useNewUrlParser: true });
 
 //SCHEMA SETUP
 var campgroundSchema = new mongoose.Schema({
