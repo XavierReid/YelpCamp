@@ -12,4 +12,10 @@
   display: inline;
 }
 
+/* Google Maps */
+#map {
+  height: 400px;
+  width: 100%;
+}
+
 /*# sourceMappingURL=styles.css.map */
