@@ -13,7 +13,7 @@ function isLoggedIn(req, res, next) {
 function checkCommentOwnership(req, res, next) {
     if (req.isAuthenticated()) {
         comments.find(req.params.commentId, function (comment) {
-            if (comment.author.id.equals(req.user._id)) {
+            if (comment.author.id.equals(req.user._id) || req.user.isAdmin) {
                 return next();
             }
             req.flash("error", "You don't have permission to do that");
@@ -29,7 +29,7 @@ function checkCommentOwnership(req, res, next) {
 function checkCampgroundOwnership(req, res, next) {
     if (req.isAuthenticated()) {
         campgrounds.find(req.params.id, function (campground) {
-            if (campground.creator.id.equals(req.user._id)) {
+            if (campground.creator.id.equals(req.user._id) || req.user.isAdmin) {
                 return next();
             }
             req.flash("error", "You don't have permission to do that");
