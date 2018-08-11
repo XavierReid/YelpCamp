@@ -50,16 +50,16 @@ function findAllCampgrounds(callback) {
     });
 }
 
-// function findCampground(id, callback) {
-//     Campground.findById(id, function (err, campground) {
-//         if (err) {
-//             return console.err(err);
-//         }
-//         if (callback) {
-//             callback(campground);
-//         }
-//     });
-// }
+function search(searchObj, callback) {
+    Campground.find(searchObj, function (err, campground) {
+        if (err) {
+            return console.err(err);
+        }
+        if (callback) {
+            callback(campground);
+        }
+    });
+}
 
 function findCampgroundWithComments(id, callback) {
     Campground.findById(id).populate("comments").exec(function (err, campground) {
@@ -114,5 +114,6 @@ module.exports = {
     findAll: findAllCampgrounds,
     removeAll: removeAll,
     removeById: remove,
-    findAndUpdate: findAndUpdate
+    findAndUpdate: findAndUpdate,
+    search: search
 };

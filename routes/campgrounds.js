@@ -15,9 +15,21 @@ var express = require("express"),
 // var geocoder = NodeGeocoder(options);
 
 router.get("/", function (req, res) {
-    campgrounds.findAll(function (campgrounds) {
-        res.render("campgrounds/index", { campgrounds: campgrounds });
-    });
+    var message;
+    if(req.query.search){
+        const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+        campgrounds.search({name: regex}, function(campgrounds){
+            if(campgrounds.length < 1){
+                message = "No campgrounds matched, please try again";
+            }
+            res.render("campgrounds/index", { campgrounds: campgrounds, message: message });
+        });
+    }
+    else{
+        campgrounds.findAll(function (campgrounds) {
+            res.render("campgrounds/index", { campgrounds: campgrounds, message: message });
+        });
+    }
 });
 
 router.get("/new", middleware.isLoggedIn, function (req, res) {
@@ -44,7 +56,7 @@ router.post("/", middleware.isLoggedIn, function (req, res) {
     // campgroundObj.lat = lat;
     // campgroundObj.long = lng;
     campgrounds.create(campgroundObj, function (campground) {
-        res.redirect("/campgrounds", { page: 'campgrounds' });
+        res.redirect("/campgrounds");
     });
     // });
 });
@@ -88,5 +100,9 @@ router.delete("/:id", middleware.checkCampgroundOwnership, function (req, res) {
         res.redirect("/campgrounds");
     });
 });
+
+function escapeRegex(text){
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+}
 
 module.exports = router;
